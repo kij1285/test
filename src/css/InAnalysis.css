@@ -921,22 +921,84 @@ body {
 }
 
 /* ---------------- Capability action groups ---------------- */
-.iaActionByComp {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.iaActionByComp{
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 }
-@media (max-width: 980px) {
-  .iaActionByComp {
-    grid-template-columns: 1fr;
-  }
-}
 
-.iaActionGroup {
+/* 가로로 긴 직사각형 카드 */
+.iaActionGroup{
   border: 1px solid var(--line);
   background: var(--surface2);
   border-radius: 14px;
   padding: 12px;
+
+  display: grid;
+  grid-template-columns: 160px 1fr; /* 좌: 타이틀/점수, 우: 코멘트/액션 */
+  gap: 12px;
+  align-items: start;
+}
+
+@media (max-width: 980px){
+  .iaActionGroup{ grid-template-columns: 1fr; }
+}
+
+.iaActionLeft{ display:flex; flex-direction: column; gap: 10px; }
+.iaActionRight{ display:flex; flex-direction: column; gap: 10px; }
+
+.iaActionGroupTitle{
+  font-weight: 950;
+  color:#27304a;
+  margin: 0;
+}
+
+/* 점수 pill */
+.iaActionScoreRow{ display:flex; gap: 6px; flex-wrap: wrap; }
+.iaPill{
+  display:inline-flex;
+  align-items:center;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  border: 1px solid var(--line);
+  background:#fff;
+}
+.iaPill.me{ }
+.iaPill.peer{ color:#64748b; }
+
+/* 미니 비교 바 */
+.iaMiniBar{
+  position: relative;
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background:#fff;
+}
+.iaMiniBarTrack{
+  position:absolute; inset:0;
+  background: #fff;
+}
+.iaMiniBarPeer{
+  position:absolute; left:0; top:0; bottom:0;
+  background: rgba(148,163,184,0.55);
+}
+.iaMiniBarMe{
+  position:absolute; left:0; top:0; bottom:0;
+  background: rgba(37,99,235,0.75);
+}
+
+/* 코멘트 박스: 더 얇고 compact */
+.iaCompComment.iaCompCommentCompact{
+  margin: 0;
+  padding: 10px;
+}
+
+/* 액션 리스트: 가로 공간 활용 */
+.iaActionListWide li{
+  align-items: flex-start;
 }
 
 .iaActionGroupTitle {

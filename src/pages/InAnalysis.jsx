@@ -483,31 +483,49 @@ function CapabilityPanel({ data }) {
           <div className="iaBoxTitle">항목별 개선 액션</div>
 
           <div className="iaActionByComp">
-            {labels.map((label) => (
-              <div className="iaActionGroup" key={label}>
-                <div className="iaActionGroupTitle">{label}</div>
+            {labels.map((label, idx) => {
+              const my = values[idx] ?? 0;
+              const peer = peerValues[idx] ?? 0;
 
-                <div className="iaCompComment">
-                  <div className="good">
-                    👍 {data?.commentsByCompetency?.[label]?.good ?? "—"}
+              return (
+                <div className="iaActionGroup" key={label}>
+                  {/* 좌측: 항목명 + 점수/미니바 */}
+                  <div className="iaActionLeft">
+                    <div className="iaActionGroupTitle">{label}</div>
+
+                    <div className="iaActionScoreRow">
+                      <span className="iaPill me">내 점수 {my}</span>
+                      <span className="iaPill peer">평균 {peer}</span>
+                    </div>
+
+                    <MiniCompareBar my={my} peer={peer} max={100} />
                   </div>
-                  <div className="bad">
-                    ⚠️ {data?.commentsByCompetency?.[label]?.bad ?? "—"}
+
+                  {/* 우측: 코멘트 + 액션 */}
+                  <div className="iaActionRight">
+                    <div className="iaCompComment iaCompCommentCompact">
+                      <div className="good">
+                        👍 {data?.commentsByCompetency?.[label]?.good ?? "—"}
+                      </div>
+                      <div className="bad">
+                        ⚠️ {data?.commentsByCompetency?.[label]?.bad ?? "—"}
+                      </div>
+                    </div>
+
+                    <ul className="iaActionList compact iaActionListWide">
+                      {(
+                        data?.actionsByCompetency?.[label] ?? ["(액션 없음)"]
+                      ).map((t, i) => (
+                        <li key={i}>
+                          <span className="iaActionNo">{i + 1}</span>
+                          <span>{t}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
-
-                <ul className="iaActionList compact">
-                  {(data?.actionsByCompetency?.[label] ?? ["(액션 없음)"]).map(
-                    (t, i) => (
-                      <li key={i}>
-                        <span className="iaActionNo">{i + 1}</span>
-                        <span>{t}</span>
-                      </li>
-                    ),
-                  )}
-                </ul>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {labels.length === 0 && (
@@ -519,6 +537,18 @@ function CapabilityPanel({ data }) {
         </div>
       </div>
     </>
+  );
+}
+function MiniCompareBar({ my, peer, max = 100 }) {
+  const myPct = Math.max(0, Math.min(1, my / max)) * 100;
+  const peerPct = Math.max(0, Math.min(1, peer / max)) * 100;
+
+  return (
+    <div className="iaMiniBar">
+      <div className="iaMiniBarTrack" />
+      <div className="iaMiniBarPeer" style={{ width: `${peerPct}%` }} />
+      <div className="iaMiniBarMe" style={{ width: `${myPct}%` }} />
+    </div>
   );
 }
 
