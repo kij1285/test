@@ -9,8 +9,11 @@ export default function InAnalysis() {
   return (
     <div className="iaPage iaNoScroll">
       <main className="iaMain iaMainFixed">
-        <header className="iaTop">
-          <h1 className="iaTopTitle">면접 결과</h1>
+        <header className="iaTop iaTopGradient">
+          <div className="iaTopContent">
+            <h1 className="iaTopTitle">면접 결과 분석</h1>
+            <p className="iaTopSubtitle">AI 기반 면접 성과 분석 리포트</p>
+          </div>
           <div className="iaTopActions">
             <button
               className="iaBtn"

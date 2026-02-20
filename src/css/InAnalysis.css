@@ -14,17 +14,17 @@ body {
 /* ---------------- Theme Tokens (Scoped) ---------------- */
 .iaPage {
   /* Neutral base (웹 톤) */
-  --bg: var(--app-bg, #f8fafc);
-  --surface: var(--app-surface, #ffffff);
-  --surface2: var(--app-surface2, #f1f5ff); /* subtle blue tint only */
-  --text: var(--app-text, #0f172a);
-  --muted: var(--app-muted, #64748b);
-  --line: var(--app-line, #e2e8f0);
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface2: #f1f5ff; /* subtle blue tint only */
+  --text: #0f172a;
+  --muted: #64748b;
+  --line: #e2e8f0;
 
   /* Brand (Home 톤: 딥블루 계열) */
-  --brand: var(--primary-600, #2563eb);
-  --brand-700: var(--primary-700, #1d4ed8);
-  --brand-ink: var(--primary-ink, #14327a);
+  --brand: #2563eb;
+  --brand-700: #1d4ed8;
+  --brand-ink: #14327a;
 
   /* Shadows / radius */
   --shadow1: 0 8px 26px rgba(15, 23, 42, 0.06);
@@ -32,10 +32,11 @@ body {
   --radius: 18px;
 
   /* Page base */
+  position: relative;
   width: 100%;
   min-height: 100vh;
   color: var(--text);
-  background: var(--bg);
+  background: linear-gradient(to bottom, #f8fafc 0%, #e0e7ff 100%);
   font-family:
     ui-sans-serif,
     system-ui,
@@ -46,6 +47,34 @@ body {
     Arial;
 }
 
+.iaPage::before {
+  content: '';
+  position: fixed;
+  top: -20%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: rgba(59, 130, 246, 0.08);
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.iaPage::after {
+  content: '';
+  position: fixed;
+  bottom: -20%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  background: rgba(37, 99, 235, 0.06);
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+}
+
 /* optional helper */
 .iaNoScroll {
   height: 100vh;
@@ -54,9 +83,11 @@ body {
 
 /* ---------------- Layout ---------------- */
 .iaMain {
+  position: relative;
   width: min(1200px, 96vw);
   margin: 0 auto;
   padding: 18px 0 0;
+  z-index: 1;
 }
 
 .iaMainFixed {
@@ -71,41 +102,86 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 2px;
+  padding: 24px 32px;
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+  margin-bottom: 8px;
+}
+
+.iaTopGradient {
+  position: relative;
+  overflow: hidden;
+}
+
+.iaTopGradient::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  filter: blur(60px);
+}
+
+.iaTopContent {
+  flex: 1;
 }
 
 .iaTopTitle {
   margin: 0;
-  font-size: 18px;
+  font-size: 28px;
+  font-weight: 700;
   letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.iaTopSubtitle {
+  margin: 4px 0 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .iaTopActions {
   display: flex;
   gap: 8px;
+  position: relative;
+  z-index: 1;
 }
 
 /* ---------------- Buttons ---------------- */
 .iaBtn {
-  border: 1px solid var(--line);
-  background: var(--surface);
-  border-radius: 12px;
-  padding: 10px 12px;
-  font-weight: 900;
-  color: #27304a;
-  box-shadow: var(--shadow1);
+  border: none;
+  background: #ffffff;
+  color: #2563eb;
+  border-radius: 999px;
+  padding: 12px 24px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   transition:
-    transform 0.06s ease,
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 .iaBtn:hover {
-  border-color: rgba(37, 99, 235, 0.35);
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  transform: scale(1.05);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
 }
 .iaBtn:active {
-  transform: translateY(1px);
+  transform: scale(0.98);
+}
+
+/* Secondary button variant */
+.iaBtnSecondary {
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  color: #ffffff;
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+}
+.iaBtnSecondary:hover {
+  box-shadow: 0 15px 40px rgba(37, 99, 235, 0.4);
 }
 
 /* ---------------- Tabs ---------------- */
@@ -117,30 +193,41 @@ body {
 }
 
 .iaTab {
-  border: 1px solid var(--line);
+  border: none;
   background: var(--surface);
   border-radius: 999px;
-  padding: 10px 14px;
-  font-weight: 950;
-  color: #27304a;
+  padding: 10px 20px;
+  font-weight: 600;
+  color: #64748b;
   cursor: pointer;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
   transition:
-    background 0.15s ease,
-    border-color 0.15s ease,
-    color 0.15s ease;
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
+}
+.iaTab:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
 }
 .iaTab.on {
-  background: rgba(37, 99, 235, 0.1);
-  border-color: rgba(37, 99, 235, 0.3);
-  color: var(--brand-ink);
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+  transform: translateY(-2px);
 }
 
 /* ---------------- Card / Panel ---------------- */
 .iaCard {
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow2);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+.iaCard:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
 .iaPanel {
@@ -266,11 +353,17 @@ body {
 .iaBox {
   border: 1px solid var(--line);
   background: var(--surface);
-  border-radius: 16px;
-  padding: 14px;
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 8px 26px rgba(15, 23, 42, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.iaBox:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 34px rgba(15, 23, 42, 0.1);
 }
 .iaBoxTight {
-  padding: 12px;
+  padding: 14px;
 }
 
 .iaBoxTitle {
@@ -306,10 +399,15 @@ body {
 
 .iaKpiCard {
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: 20px;
   background: var(--surface);
-  box-shadow: var(--shadow1);
-  padding: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.iaKpiCard:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
 .iaKpiTop {
@@ -326,10 +424,14 @@ body {
 }
 
 .iaKpiScore {
-  font-size: 34px;
-  font-weight: 950;
-  margin-top: 6px;
+  font-size: 38px;
+  font-weight: 700;
+  margin-top: 8px;
   letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .iaKpiMeta {
@@ -341,13 +443,14 @@ body {
 }
 
 .iaGradePill {
-  border: 1px solid rgba(37, 99, 235, 0.25);
-  background: rgba(37, 99, 235, 0.1);
-  color: var(--brand-ink);
-  font-weight: 950;
+  border: none;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  color: #ffffff;
+  font-weight: 600;
   font-size: 12px;
   border-radius: 999px;
-  padding: 6px 10px;
+  padding: 6px 14px;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 /* ---------------- Summary Grid ---------------- */
@@ -395,13 +498,19 @@ body {
   flex-wrap: wrap;
 }
 .iaChip {
-  border: 1px solid rgba(37, 99, 235, 0.25);
-  background: rgba(37, 99, 235, 0.1);
+  border: none;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%);
   color: var(--brand-ink);
   border-radius: 999px;
-  padding: 6px 10px;
-  font-weight: 950;
+  padding: 7px 14px;
+  font-weight: 600;
   font-size: 12px;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.iaChip:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
 }
 
 /* ---------------- Ring ---------------- */
@@ -531,10 +640,13 @@ body {
   color: #27304a;
 }
 .iaDocScore {
-  font-weight: 950;
-  font-size: 28px;
+  font-weight: 700;
+  font-size: 32px;
   letter-spacing: -0.03em;
-  color: var(--brand-ink);
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .iaDocCols {
@@ -571,10 +683,16 @@ body {
 
 .iaQItem {
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: 20px;
   overflow: hidden;
   background: var(--surface);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 8px 26px rgba(15, 23, 42, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.iaQItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 34px rgba(15, 23, 42, 0.1);
 }
 
 .iaQHead {
